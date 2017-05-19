@@ -1,0 +1,24 @@
+{
+    "name": "regexp",
+    "version": "1.0.0",
+    "author": "Michael Hanus <mh@informatik.uni-kiel.de>",
+    "synopsis": "Library to specify the semantics of regular expressions",
+    "category": [ "Parsing" ],
+    "description": "This package contains a library which specifies the semantics of regular expressions and regular expression matching in a high-level manner via non-deterministic operations. This library might be useful as an oracle to test more efficient regular expression matchers.",
+    "dependencies": { },
+    "exportedModules": [ "RegExpSem" ],
+    "compilerCompatibility": {
+        "pakcs": ">= 1.14.0",
+        "kics2": ">= 0.5.0"
+    },
+    "license": "BSD-3-Clause",
+    "licenseFile": "LICENSE",
+    "testsuite": {
+        "src-dir": "examples",
+        "modules": [ "ABC" ]
+    },
+    "source": {
+        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/regexp.git",
+        "tag": "$version"
+    }
+}
