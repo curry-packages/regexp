@@ -14,7 +14,7 @@
 
 module RegExp(match, RegExp, ORegExp(..)) where
 
-import List
+import Data.List
 
 --- Data type for regex representation in Curry
 type RegExp a = [ORegExp a]
@@ -65,7 +65,7 @@ matchstar r rgx st = (||)
 
 tryeach :: Ord a => [Bool] -> [[a]] -> RegExp a -> RegExp a -> Bool
 tryeach [] []         _  _   = False
-tryeach (b:bs) (t:ts) r  rgx = 
+tryeach (b:bs) (t:ts) r  rgx =
   (||)
     (if b
       then
@@ -105,7 +105,7 @@ tryeachRestricted m      (b:bs) (t:ts) r  rgx  =
   (||)
     (if b
       then
-        (match rgx t || matchtimes t 1 m r rgx)  
+        (match rgx t || matchtimes t 1 m r rgx)
       else False)
     (tryeachRestricted m bs ts r rgx)
 
