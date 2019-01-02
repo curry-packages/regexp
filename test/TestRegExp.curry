@@ -7,8 +7,9 @@
 --- POSIX extended regular expressions
 ------------------------------------------------------------------------------
 
+import Test.Prop
+
 import RegExp -- required in the pre-processed program
-import Test.EasyCheck
 
 check1 :: Bool
 check1 = match ``regex abc'' "abc"
