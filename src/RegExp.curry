@@ -5,16 +5,15 @@
 --- of POSIX extended regular expressions into Curry programs.
 ---
 --- @author Jasper Sikorra
---- @version July 2017
---- @category general
+--- @version November 2020
 ------------------------------------------------------------------------------
 -- TODO
 -- - Stard and End are not implemented
 -- - No function to match only a part of a lists
 
-module RegExp(match, RegExp, ORegExp(..)) where
+module RegExp ( match, RegExp, ORegExp(..) ) where
 
-import List
+import Data.List
 
 --- Data type for regex representation in Curry
 type RegExp a = [ORegExp a]

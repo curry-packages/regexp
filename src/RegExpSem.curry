@@ -40,18 +40,18 @@ match r s = sem r =:= s
 -- A constraint similar to Unix's grep (i.e., to check whether a regular
 -- expression is contained somewhere in a string) can be defined
 -- as follows:
-grep :: RE a -> [a] -> Bool
+grep :: Data a => RE a -> [a] -> Bool
 grep r s = _ ++ sem r ++ _ =:= s
 
 --- The following operation extends the operation 'grep' to return
 --- the substring which starts with the regular expression.
-grepShow :: RE a -> [a] -> [a]
+grepShow :: Data a => RE a -> [a] -> [a]
 grepShow r s | xs ++ sem r ++ _ =:= s  = drop (length xs) s
    where xs free
 
 --- The following operation extends the operation 'grep' to return
 --- the position where the matched regular expression starts.
-grepPos :: RE a -> [a] -> Int
+grepPos :: Data a => RE a -> [a] -> Int
 grepPos r s | xs ++ sem r ++ ys =:= s
             = length xs
  where xs,ys free
