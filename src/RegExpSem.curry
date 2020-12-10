@@ -34,7 +34,7 @@ sem (Star a)   = [] ? sem (Conc a (Star a))
 
 --- An operation to match a string against a regular expression
 --- can be defined by the following constraint:
-match :: RE a -> [a] -> Bool
+match :: Data a => RE a -> [a] -> Bool
 match r s = sem r =:= s
 
 -- A constraint similar to Unix's grep (i.e., to check whether a regular
