@@ -18,6 +18,9 @@
     "testsuite": [
         { "src-dir": "examples",
           "modules": [ "ABC" ]
+        },
+        { "src-dir": "test",
+          "modules": [ "TestRegExpCode" ]
         }
     ],
     "source": {
