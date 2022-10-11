@@ -7,9 +7,10 @@
 --- POSIX extended regular expressions
 ------------------------------------------------------------------------------
 
+import Data.List ( nub, sort )
 import Test.Prop
 
-import RegExp -- required in the pre-processed program
+import RegExpEff -- required in the pre-processed program
 
 check1 :: Bool
 check1 = match ``regex abc'' "abc"
@@ -48,8 +49,7 @@ testCheck5c = always (not (check5 "abc42"))
 testCheck5d = always (not (check5 ""))
 
 -- Tests with parameterized regular expressions:
-
-pregexp1 :: Ord a => a -> a -> [a] -> Bool
+pregexp1 :: Char -> Char -> [Char] -> Bool
 pregexp1 v1 v2 = match ``regex [<v1>-<v2>]*''
 
 testPregexp1a = always (pregexp1 'a' 'z' "abc")
@@ -57,12 +57,11 @@ testPregexp1b = always (pregexp1 'A' 'Z' "ABC")
 testPregexp1c = always (not (pregexp1 'A' 'Z' "abc"))
 
 
-pregexp2 :: Ord a => a -> a -> [a] -> Bool
+pregexp2 :: Char -> Char -> [Char] -> Bool
 pregexp2 v1 v2 = match ``regex (<v1>|<v2>)*''
 
 testPregexp2a = always (pregexp2 'a' 'b' "abaabbb")
 testPregexp2b = always (not (pregexp2 'a' 'z' "abaabbb"))
-
 
 -- A regular expression containing a complex Curry expression:
 check6 :: Bool
@@ -70,3 +69,35 @@ check6 = match ``regex <((\x -\> x) 'a')>'' "a"
 
 testCheck6 = always check6
 
+check7 :: Bool
+check7 = match ``regex ^(abc)'' "abca"
+
+testCheck7 = always check7
+
+check8 :: Bool
+check8 = match ``regex (abc)$'' "aabc"
+
+testCheck8 = always check8
+
+-- Grep-check.
+check9 :: [Int]
+check9 = grep ``regex a'' "aa"
+
+testCheck9 = check9 -=- [0,1]
+
+-- Check some capture groups.
+check10 :: [(Int, [[Char]])]
+check10 = capture ``regex a/(b)/c'' "abc"
+
+testCheck10 = check10 -=- [(0,["abc"]),(1,["b"])]
+
+check11 :: [(Int, [[Char]])]
+check11 = capture ``regex (/((a|c))/)*'' "acaa"
+-- > [(0,["acaa"]),(1,["a","c","a","a"])]
+
+testCheck11 = sort (nub (snd (check11 !! 1))) -=- ["a","c"]
+
+check12 :: [(Int, [[Char]])]
+check12 = capture ``regex (/(ac)/)*'' "acac"
+
+testCheck12 = check12 -=- [(0,["acac"]),(1,["ac","ac"])]
