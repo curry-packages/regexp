@@ -132,13 +132,13 @@ grep re s = grep' re s 0
 --- @param r - The regular expression
 --- @param s - The input list
 --- @return l - The list of substrings from s that match r
-grepShow :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [[a]]
+grepShow :: (Data a, Ord a) => RegExp a -> [a] -> [[a]]
 grepShow re s = allValues (grepShow' re s)
  where grepShow' re' s' | s' =:= _ ++ l ++ _ && match re' l = l
                           where l free
 
 --- As `grepShow` but without duplicated elements.
-grepShowUnique :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [[a]]
+grepShowUnique :: (Data a, Ord a) => RegExp a -> [a] -> [[a]]
 grepShowUnique re s = nub  (grepShow re s)
 
 --- The match function is used to match lists with regular expressions
@@ -245,7 +245,7 @@ tryeachRestricted m      (b:bs) (t:ts) r  rgx  =
 --- @param s - The input list
 --- @result l - The list with the capture groups and
 --- the respectively matching substrings
-capture :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [(Int, [[a]])]
+capture :: (Data a, Ord a) => RegExp a -> [a] -> [(Int, [[a]])]
 capture re s = case re of
   []                  -> []
   (Nil:ors)           -> capture ors s
@@ -278,7 +278,7 @@ capture re s = case re of
   (Capture n r:ors)   -> con $ allValues $ captureCapture (Capture n r : ors) s
 
 -- Finds the capture groups within a star.
-captureStar :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [(Int, [[a]])]
+captureStar :: (Data a, Ord a) => RegExp a -> [a] -> [(Int, [[a]])]
 captureStar (Star r : ors) s =
   if s =:= s1 ++ s2 && match ([Star r]) s1 && match ors s2
     then concat (map (capture r) (grepShow r s1)) ++ capture ors s2
@@ -286,7 +286,7 @@ captureStar (Star r : ors) s =
       where s1, s2 free
 
 -- Finds the capture groups within a start.
-captureStart :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [(Int, [[a]])]
+captureStart :: (Data a, Ord a) => RegExp a -> [a] -> [(Int, [[a]])]
 captureStart re s = case re of
   (Start r : [])  -> if match (Start r : []) s
                        then capture r (head (grepShow r s))
@@ -298,7 +298,7 @@ captureStart re s = case re of
         where s1, s2 free
 
 -- Finds the capture groups within an end.
-captureEnd :: (Data a, Ord a, Show a) => ORegExp a -> [a] -> [(Int, [[a]])]
+captureEnd :: (Data a, Ord a) => ORegExp a -> [a] -> [(Int, [[a]])]
 captureEnd (End r) s =
   if s =:= _ ++ s2 && match r s2
     then capture r s2
@@ -306,7 +306,7 @@ captureEnd (End r) s =
  where s2 free
 
 -- Finds the capture groups within a times.
-captureTimes :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [(Int, [[a]])]
+captureTimes :: (Data a, Ord a) => RegExp a -> [a] -> [(Int, [[a]])]
 captureTimes (Times (n,m) r : ors) s =
   if s =:= s1 ++ s2 && match ([Times (n,m) r]) s1 && match ors s2
     then concat (map (capture r) (grepShow r s1)) ++ capture ors s2
@@ -314,7 +314,7 @@ captureTimes (Times (n,m) r : ors) s =
  where s1, s2 free
 
 -- Finds capture groups.
-captureCapture :: (Data a, Ord a, Show a) => RegExp a -> [a] -> [(Int, [[a]])]
+captureCapture :: (Data a, Ord a) => RegExp a -> [a] -> [(Int, [[a]])]
 captureCapture (Capture n r : ors) s =
   if s =:= s1 ++ s2 && match r s1 && match ors s2
     then [(n, [s1])] ++ capture r s1 ++ capture ors s2
