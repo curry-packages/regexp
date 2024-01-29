@@ -1,6 +1,6 @@
 {
   "name": "regexp",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "author": "Michael Hanus <mh@informatik.uni-kiel.de>",
   "synopsis": "Libraries to specify the structure and semantics of regular expressions",
   "description": "This package contains a library which specifies the semantics of regular expressions and regular expression matching in a high-level manner via non-deterministic operations. This library might be useful as an oracle to test more efficient regular expression matchers. Furthermore, there is also a library which is used by the Curry preprocessor to translate regular expression in POSIX syntax occurring as integrated code in Curry programs.",
@@ -8,8 +8,7 @@
   "license": "BSD-3-Clause",
   "licenseFile": "LICENSE",
   "dependencies": {
-    "base"        : ">= 3.0.0, < 4.0.0",
-    "allvalues"   : ">= 3.0.0, < 4.0.0"
+    "base"        : ">= 3.2.0, < 4.0.0"
     },
     "exportedModules": [ "RegExpSem", "RegExp", "RegExpEff" ],
     "testsuite": [
@@ -21,7 +20,7 @@
         }
     ],
     "source": {
-        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/regexp.git",
+        "git": "https://github.com/curry-packages/regexp.git",
         "tag": "$version"
     }
 }

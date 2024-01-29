@@ -20,7 +20,7 @@ module RegExp
  where
 
 import Data.List
-import Control.AllValues ( allValues )
+import Control.Search.Unsafe ( allValues )
 
 ------------------------------------------------------------------------------
 --- Data type for regex representation in Curry.
